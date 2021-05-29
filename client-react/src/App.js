@@ -28,6 +28,7 @@ class App extends React.Component {
     this.getToken = this.getToken.bind(this)
   }
 
+  
   componentDidMount() {
     socket.on('chat message', msg => {
       console.log(this.state.messages)
