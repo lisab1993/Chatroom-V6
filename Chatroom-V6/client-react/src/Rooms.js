@@ -11,6 +11,7 @@ function getRooms (messages, newRoom) {
   return uniqrooms
 }
 
+
 export default function Rooms (props) {
   const [newRoom, setNewRoom] = useState('')
   const history = useHistory()
