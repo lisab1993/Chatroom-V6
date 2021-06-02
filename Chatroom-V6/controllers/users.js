@@ -1,15 +1,14 @@
-const express = require('express')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 
+const express = require('express')
 const router = express.Router()
 
-router.post('/signup', (req, res) => {
+router.post('/sign-up', (req, res) => {
+    console.log('sign up ran yo')
   User.findOne({ username: req.body.username }, async (err, userExists) => {
     if (err) return res.status(500).send(err)
     if (userExists) return res.status(400).send({ errorMsg: 'username already exists' })
-
-    console.log(`username: ${req.body.username}, password: ${req.body.password}`)
 
     const user = await User.signUp(req.body.username, req.body.password)
     res.status(201).send(user.sanitize())
@@ -24,8 +23,9 @@ router.post('/login', (req, res) => {
     const token = jwt.sign({
       _id: user._id
     }, 'CHANGEME!')
+    console.log(token)
 
-    res.send({ token })
+    res.send({ token: token, nick: req.body.username })
   })
 })
 

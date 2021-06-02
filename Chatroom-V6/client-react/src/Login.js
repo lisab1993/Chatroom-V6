@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+
+import { useHistory, Link } from 'react-router-dom'
 
 export default function Login(props) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  //useHistory keeps track of browser manipulations
+  //you can go back to the previous page, as an example
+  //this allows us to visit other pages without refreshing and losing state
+  //it kinda runs parallel to your browser history
   const history = useHistory()
 
   function handleChangeUsername(event) {
@@ -16,20 +21,23 @@ export default function Login(props) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    console.log(`username: ${username}, password: ${password}`)
+    // console.log(`username: ${username}, password: ${password}`)
     const options = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+       },
       body: JSON.stringify({ username: username, password: password })
     }
     fetch('/login', options)
       .then(res => res.json())
       .then(data => {
+        // console.log(data)
         props.getToken(data)
-        data ?
-        history.push('/')
-        :
-        alert('Oops, something went wrong :/')
+        data.token 
+        ? history.push('/')
+        : alert('Oops, something went wrong :/')
       })
     // props.onLogin(username)
     // redirects back to home after successful login
@@ -43,6 +51,10 @@ export default function Login(props) {
         <input type='password' placeholder='password...' value={password} onChange={handleChangePassword} />
         <button type='submit'>Login</button>
       </form>
+
+      <div>
+        Don't have an account yet? Sign up <Link to="/signup">here</Link>
+      </div>
     </>
   )
 }

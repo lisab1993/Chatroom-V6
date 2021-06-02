@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import {Link} from 'react-router-dom'
 
 export default function SignupForm () {
     const [usernameText, setUsernameText] = useState('')
@@ -19,7 +20,7 @@ export default function SignupForm () {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: usernameText, password: passwordText })  
         }
-        fetch('/signup', options) 
+        fetch('/sign-up', options) 
     }
 
     //send up the token on login
@@ -50,7 +51,7 @@ export default function SignupForm () {
                 <button type="submit">Submit</button>
             </form>
             <div>
-                Already have an account? Login here!
+                Already have an account? Login <Link to="/login">here</Link>
             </div>
         </div>
     )

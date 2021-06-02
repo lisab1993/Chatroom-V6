@@ -26,7 +26,7 @@ export default function Rooms (props) {
   }
 
   return (
-    <div id='room'>
+    <div style={{backgroundColor: 'lightblue'}} id='room'>
       <button onClick={addRoom}>Add Room</button>
       <label htmlFor='room-select'>Change Room:</label>
       <select onChange={handleChange} value={newRoom} id='room-select'>
